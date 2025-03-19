@@ -1,0 +1,16 @@
+server:
+    port: 8080
+
+logging:
+    level:
+        org.springframework.security.*: info
+
+spring:
+    application:
+        name: backend-auth
+
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${KEYCLOAK_URI}/realms/${KEYCLOAK_REALM}
