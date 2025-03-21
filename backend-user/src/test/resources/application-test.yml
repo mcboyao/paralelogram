@@ -1,0 +1,36 @@
+server:
+    port: 8081
+
+spring:
+    application:
+        name: backend-user
+
+    config:
+        import: optional:vault://
+
+    datasource:
+        hikari:
+            maximum-pool-size: 5
+            minimum-idle: 2
+
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: ${JPA_SHOW_SQL:false}
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: ${JPA_FORMAT_SQL:false}
+    cloud:
+        vault:
+            uri: http://localhost:8200
+            enabled: false
+            kv:
+                enabled: false
+
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${KEYCLOAK_URI}/realms/${KEYCLOAK_REALM}
+

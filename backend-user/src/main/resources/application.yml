@@ -1,0 +1,65 @@
+server:
+    port: 8081
+
+logging:
+    level:
+        org.springframework.security.*: trace
+
+spring:
+    application:
+        name: backend-user
+
+    config:
+        import: optional:vault://
+
+    management:
+        health:
+            vault:
+                enabled: true
+
+    datasource:
+        hikari:
+            maximum-pool-size: 5
+            minimum-idle: 2
+
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: ${JPA_SHOW_SQL:false}
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: ${JPA_FORMAT_SQL:false}
+
+    cloud:
+        vault:
+            token: ${VAULT_TOKEN}
+            kv:
+                enabled: true
+                backend: secret
+                default-context: application
+
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: ${KEYCLOAK_URI}/realms/${KEYCLOAK_REALM}
+
+
+---
+spring:
+    config:
+        activate:
+            on-profile: development
+    cloud:
+        vault:
+            uri: http://localhost:8200
+
+---
+spring:
+    config:
+        activate:
+            on-profile: production
+    cloud:
+        vault:
+            uri: ${VAULT_URI}
