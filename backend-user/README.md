@@ -10,6 +10,10 @@ User Service using [Keycloak](https://www.keycloak.org/) as OAuth2 Resource Serv
   * Docker compose sample is also available [here](https://github.com/mcboyao/docker/tree/main/postgres)
 * Setup Vault https://developer.hashicorp.com/vault/docs/install
   * Docker compose sample is also available [here](https://github.com/mcboyao/docker/tree/main/vault)
+  * Configure PostgreSQL secrets via Admin Console or CLI
+````
+vault kv put secret/backend-user PG_USERNAME=postgres PG_PASSWORD=postgres PG_HOST=localhost PG_PORT=5432 PG_DATABASE=postgres PG_SCHEMA=public
+````
 * Configure required environment variables
 ````
 VAULT_TOKEN=token
